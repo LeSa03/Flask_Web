@@ -71,11 +71,12 @@ def uklanjanje_studenta():
     return flask.redirect("/", 404)
 
 @app.route("/izmeni", methods=["GET"])
-def forma_za_zimenu():
+def forma_za_izmenu():
     broj_indeksa = flask.request.args.get("student")
+    student_za_izmenu = None
     for student in studenti:
         if student["brojIndeksa"] == broj_indeksa:
-            student_za_izmenu = studnet
+            student_za_izmenu = student
 
     if student_za_izmenu is None:
         return "nije pronadjen", 404
@@ -88,18 +89,18 @@ def forma_za_zimenu():
     <title>Forma</title>
   </head>
   <body>
-    <form onsubmit="return validacija()" action="/izmeni?student={}" method="post">
+    <form onsubmit="return validacija()" action="/izmeni?student={broj_indeksa}" method="post">
       <div>
         <label
           >Broj indeksa
-          <input id="broj-indeksa" type="text" name="brojIndeksa" required
+          <input id="broj-indeksa" type="text" name="brojIndeksa" value="{student_za_izmenu['brojIndeksa']}" required
         /></label>
       </div>
       <div>
-        <label>Ime <input type="text" name="Ime" required /></label>
+        <label>Ime <input type="text" name="Ime" value="{student_za_izmenu['ime']}" required /></label>
       </div>
       <div>
-        <label>Przime <input type="text" name="Prezime" required /></label>
+        <label>Przime <input type="text" name="Prezime" value="{student_za_izmenu['prezime']}" required /></label>
       </div>
       <div>
         <label
@@ -110,6 +111,7 @@ def forma_za_zimenu():
             max="10"
             step="0.01"
             name="prosecnaOcena"
+            value="{student_za_izmenu['prosecnaOcena']}"
             required
         /></label>
       </div>
