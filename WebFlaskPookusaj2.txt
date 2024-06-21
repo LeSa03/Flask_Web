@@ -1,0 +1,34 @@
+WebFlask
+------------------------------------------------------------------------------------------- 
+
+Koristicemo Flask...
+
+Visusal Studio Code, posle MySql... Pajton interpreter instalirati...
+
+Dodatni paketi za pajton, ne u globalnu instalaciju...
+
+* Komandna linija se otvori * , Pokrecemo modul " python -m venv ".
+* 
+
+------------------------------------------------------------------------------------------
+
+CMD PROMPT KOMANDE
+------------------------------------------------------------------------------------------
+
+python -m venv putanja\do\okruzenja\naziv-okruzenja  -> Kreiranje Virtualnog Okruzenja
+
+wp-env\Scripts\activate  ->  Aktiviranje Virtuelnog okruzenja...
+
+python -m pip install flask -> Instaliranje Flask radnog okvira u aktiviranom okruzenju...
+
+set FLASK_APP=main.py / set FLASK_DEBUG=TRUE --> ove varijablekoristis da pokrenes HTTP
+server, i posle koristis: flask run , da bi pokrenuo isti...
+  --> Prati izmene na fajlovima i automatski loaduje promene u istim, ne moras da
+palis i gasis server stalno...
+
+-------------------------------------------------------------------------------------------
+
+
+                                      </*\> Vezbe_01 </*\>
+      
+064 1262882

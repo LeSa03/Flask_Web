@@ -1,0 +1,254 @@
+CMD PROMPT KOMANDE
+----------------------------------------------------------------------------------
+python -m venv putanja\do\okruzenja\naziv-okruzenja  -> Kreiranje Virtualnog Okruzenja
+
+wp-env\Scripts\activate  ->  Aktiviranje Virtuelnog okruzenja...
+
+python -m pip install flask -> Instaliranje Flask radnog okvira u aktiviranom okruzenju...
+
+set FLASK_APP=main.py / set FLASK_DEBUG=TRUE --> ove varijablekoristis da pokrenes HTTP
+server, i posle koristis: flask run , da bi pokrenuo isti...
+  --> Prati izmene na fajlovima i automatski loaduje promene u istim, ne moras da
+palis i gasis server stalno...
+----------------------------------------------------------------------------------
+
+/***\ DODAVANJE HTTP SERVERA || FLUSK /***\                       ///////////////
+                                                                 <---------------
+aplikativni staticki web server koji servira staticke fajlove...  \\\\\\\\\\\\\\\
+--------------------------------------------------------------------------------
+from flask import Flask
+
+app = Flask(__name__, static_url_path="/")
+
+@app.route("/")
+@app.route("/home")
+@app.route("/home.html")
+@app.route("/index")
+@app.route("/index.html")
+def home():
+    return app.send_static_file("index.html")
+
+if __name__ == "__main__":
+    app.run()
+---------------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------
+Form tag u HTML -> bitne dve metode -> method i action
+
+U Input mora da ide: type i name; ako je type number onda mora i min i max kao i step(0.01)
+type='text/number'
+name='staGod'
+
+Ako neka polja MORAJU biti popunjena ide REQUIRED samo....
+
+Ako odredjena polja imaju sablon popunjavanja kao npr... GGGG/BBBBBB - godina i br indx
+
+Definisanje REGULARNOG IZRAZA, dakle sablona popunjavanja....
+
+  ---> ****   let regIzraz = /^\d{4}\/\d{6}$/   **** pocinje / / zavrsava
+
+\d{4} -> 4 cifre, \/ -> kosa crta ( / ), \d{6} -> 6 cifara
+
+ ^ -> oznacava da pocinje sa sablonom \d{4}, dakle to je pocetak
+ $ -> definise da je " \d{6} " kraj celog sablona
+a SABLON JE -> 4 cifre( \d{4} ), kosa crta( / ), 6 cifara( \d{6} ).
+
+/\d*  --> proizvoljan br cifara, od 0 do beskonacno
+
+/\d+  --> jedna ili vise cifara
+
+/\d?  --> nula ili jedna cifra...
+
+/\d{3,7} --> od/do cifara...
+
+onsubmit="return validacija()"  --> daje browseru da proveri jel ispravan sablon i 
+jel su sva polja ispravno popunjena, ako je true poslace zahtev...
+
+PRIMER VALIDACIJE JS:::
+--------------------------------------------------------------------------------
+function validacija() {
+  let brIndeksa = document.querySelector("#broj-indeksa").value;
+
+  let regIzraz = /^\d{4}\/\d{6}$/;
+
+  let rezultat = regIzraz.test(brIndeksa);
+  if (!rezultat) {
+    alert("Neispravno unet broj indeksa!");
+  }
+  return rezultat;
+}
+--------------------------------------------------------------------------------
+
+DODAVANJE HTTP SERVERA || FLUSK
+aplikativni staticki web server koji servira staticke fajlove...
+--------------------------------------------------------------------------------
+from flask import Flask
+
+app = Flask(__name__, static_url_path="/")
+
+@app.route("/")
+@app.route("/home")
+@app.route("/home.html")
+@app.route("/index")
+@app.route("/index.html")
+def home():
+    return app.send_static_file("index.html")
+
+if __name__ == "__main__":
+    app.run()
+---------------------------------------------------------------------------------
+LISTA U PAJTONU:::
+--------------------------------------------
+studenti = [
+    {"brojIndeksa": "1234/123456", "ime": "Marko", "prezime": "Petrovic", "prosecnaOcena": 8.2},
+]
+---------------------------------------------------------------------
+POPUNJAVANJE HTML TABELE SA PODATCIMA IZ PY FAJLA...
+** Napraviti web app za upravljanje podacima o studentima. Svaki student je opisan podacima:
+br indeksa, ime, prezime i prosecna ocena. **
+////////////////// main.py \\\\\\\\\\\\\\\\\\\\\
+------------------------------------------------------------------------------------------------
+def home():
+    redovi = ""
+    for student in studenti:
+         kolone = ""
+         for k in student:
+             kolone += f"<td>{student[k]}</td>"
+         redovi += f"<tr>{kolone}</tr>\n"
+
+    return f'''
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <table>
+      <thead>
+        <tr>
+          <th>Broj indeksa</th>
+          <th>ime</th>
+          <th>prezime</th>
+          <th>Prosecna ocena</th>
+        </tr>
+      </thead>
+      <tbody>
+          {redovi}
+      </tbody>
+    </table>
+  </body>
+</html>
+'''
+------------------------------------------------------------------------------------------------
+DODAVANJE STUDENATA...
+main.py
+-----------------------------------------------------------------
+DODAVANJE STUDENTA I REDIREKCIJA NA POCETNU STRANU....
+
+@app.route("/dodajStudenta")
+def dodavanje_studenta():
+    student = dict(flask.request.args)
+    studenti.append(student)
+    return flask.redirect("/")
+-----------------------------------------------------------------
+isto samo sa POST metodom u formi
+---------------------------------------------------------------------------------
+@app.route("/dodajStudenta", methods=["POST"])
+def dodavanje_studenta():
+    student = dict(flask.request.form)
+    studenti.append(student)
+    return flask.redirect("/")
+----------------------------------------------------------------------------------
+
+//////////////////// BRISANJE STUDENATA \\\\\\\\\\\\\\\\\\\\\\
+
+------------------------------------------------------------------------------------------------
+
+import flask
+from flask import Flask
+
+app = Flask(__name__, static_url_path="/")
+
+studenti = [
+    {"brojIndeksa": "1234/123456", "ime": "Marko", "prezime": "Petrovic", "prosecnaOcena": 8.2},
+    {"brojIndeksa": "2234/123456", "ime": "Jovan", "prezime": "Jovanovic", "prosecnaOcena": 6.2},
+    {"brojIndeksa": "3234/123456", "ime": "Tejodora", "prezime": "markovic", "prosecnaOcena": 9.2},
+    {"brojIndeksa": "4234/123456", "ime": "Jovana", "prezime": "Petrovic", "prosecnaOcena": 8.8},
+]
+
+@app.route("/")
+@app.route("/home")
+@app.route("/home.html")
+@app.route("/index")
+@app.route("/index.html")
+def home():
+    redovi = ""
+    for student in studenti:
+         kolone = ""
+         for k in student:
+             kolone += f"<td>{student[k]}</td>"
+         kolone += f'<td><a href="/ukloni?student={student["brojIndeksa"]}">Ukloni</a></td>'
+         redovi += f"<tr>{kolone}</tr>\n"
+
+    return f'''
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <a href="/forma.html">Forma za dodavanje</a>
+    <table>
+      <thead>
+        <tr>
+          <th>Broj indeksa</th>
+          <th>ime</th>
+          <th>prezime</th>
+          <th>Prosecna ocena</th>
+          <th>Akcije</th>
+        </tr>
+      </thead>
+      <tbody>
+          {redovi}
+      </tbody>
+    </table>
+  </body>
+</html>
+'''
+    #return app.send_static_file("index.html")
+
+@app.route("/dodajStudenta", methods=["POST"])     <<<<-------DODAJsTUDENTA---------->>>>
+def dodavanje_studenta():
+    student = dict(flask.request.form)
+    studenti.append(student)
+    return flask.redirect("/")
+
+@app.route("/ukloni")                              <<<<-------UKLONIsTUDENTA---------->>>>
+def uklanjanje_studenta():
+    broj_indeksa = flask.request.args.get("student")
+    for i, student in enumerate(studenti):
+        if broj_indeksa == student["brojIndeksa"]:
+            studenti.pop(i)
+            return flask.redirect("/")
+        
+    return flask.redirect("/", 404)
+
+if __name__ == "__main__":
+    app.run()
+------------------------------------------------------------------------------------------------
+
+28min
+
+
+
+
+
+
