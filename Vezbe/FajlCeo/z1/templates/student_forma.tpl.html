@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <form onsubmit="validacija()" action="/dodajStudenta" method="post">
+
+        <div>
+            <label for="broj-indeksa">Broj Ideksa</label>
+            <input id="broj-indeksa" type="text" name="brojIndeksa" required>
+        </div>
+
+        <div>
+            <label>ime <input type="text" name="ime" required></label>
+        </div>
+
+        <div>
+            <label>Prezime <input type="text" name="prezime" required></label>
+        </div>
+
+        <div>
+            <label>Prosecna ocena <input type="number" min="5" max="10" step="0.01" name="prosecnaOcena" required></label>
+        </div>
+       
+        <div>
+            <button type="submit">Dodaj</button>
+        </div>
+
+    </form>
+
+</body>
+</html>

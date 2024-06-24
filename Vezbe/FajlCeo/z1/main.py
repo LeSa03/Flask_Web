@@ -17,41 +17,12 @@ studenti = [
 @app.route("/index")
 @app.route("/index.html")
 def home():
-    redovi = ""
-    for student in studenti:
-        kolone = ""
-        for k in student:
-            kolone += f"<td>{student[k]}</td>"
-        kolone += f'<td><a href="/ukloni?student={student["brojIndeksa"]}">Ukloni</a> <a href="/izmeni?student={student["brojIndeksa"]}">izmeni</a></td>'
-        redovi += f"<tr>{kolone}</tr>"
-   
-    return f"""
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zadatak_01</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <a href="/forma.html">Link Ka Formi</a>
-    <table>
-        <thead>
-            <tr>
-                <th>Broj Indeksa</th>
-                <th>ime</th>
-                <th>prezime</th>
-                <th>Prosecna Ocena</th>
-            </tr>
-        </thead>
-        <tbody>
-           {redovi}
-        </tbody>
-    </table>
-</body>
-</html>
-"""
+    return flask.render_template("tabela.tpl.html", studenti=studenti)
+
+@app.route("/formaDodavanje")
+def forma_za_dodavanje_studenta():
+    return flask.render_template("student_forma.tpl.html")
+
 
 @app.route("/dodajStudenta", methods=["POST"])
 def dodavanje_studenta():

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Broj Indeksa</th>
+                <th>ime</th>
+                <th>prezime</th>
+                <th>Prosecna Ocena</th>
+                <th>Akcije</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for s in studenti %}
+           <tr>
+             <td>{{s.brojIndeksa}}</td>
+             <td>{{s["ime"]}}</td>
+             <td>{{s.Prezime}}</td>
+             <td>{{s.ProsecnaOcena}}</td>
+             <td>
+                <a href="/izmeni?student={{s.brojIndeksa}}">Izmeni</a>
+                <a href="/ukloni?student={{s.brojIndeksa}}">Ukloni</a>
+             </td>
+           </tr>
+           {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>
