@@ -7,27 +7,34 @@
     <script src="script.js" defer></script>
 </head>
 <body>
+    {% if student == None %}
     <form onsubmit="validacija()" action="/dodajStudenta" method="post">
-
+    {% else %}
+    <form onsubmit="validacija()" action="/izmeni?student={{student.brojIndeksa}}" method="post">
+    {% endif %}
         <div>
             <label for="broj-indeksa">Broj Ideksa</label>
-            <input id="broj-indeksa" type="text" name="brojIndeksa" required>
+            <input id="broj-indeksa" type="text" name="brojIndeksa" value="{{student.brojIndeksa}}" required>
         </div>
 
         <div>
-            <label>ime <input type="text" name="ime" required></label>
+            <label>ime <input type="text" name="ime" value="{{student.ime}}" required></label>
         </div>
 
         <div>
-            <label>Prezime <input type="text" name="prezime" required></label>
+            <label>Prezime <input type="text" name="Prezime" value="{{student.Prezime}}" required></label>
         </div>
 
         <div>
-            <label>Prosecna ocena <input type="number" min="5" max="10" step="0.01" name="prosecnaOcena" required></label>
+            <label>Prosecna ocena <input type="number" min="5" max="10" step="0.01" name="ProsecnaOcena" value="{{student.ProsecnaOcena}}" required></label>
         </div>
        
         <div>
+           {% if student is none %} 
             <button type="submit">Dodaj</button>
+           {% else %}
+           <button type="submit">Izmeni</button>
+           {% endif %}
         </div>
 
     </form>
