@@ -15,6 +15,7 @@
                 <th>ime</th>
                 <th>prezime</th>
                 <th>Prosecna Ocena</th>
+                <th>Smer</th>
                 <th>Akcije</th>
             </tr>
         </thead>
@@ -25,6 +26,7 @@
              <td>{{s["ime"]}}</td>
              <td>{{s.Prezime}}</td>
              <td>{{s.ProsecnaOcena}}</td>
+             <td>{{s.smer.sifra}}</td>
              <td>
                 <a href="/izmeni?student={{s.brojIndeksa}}">Izmeni</a>
                 <a href="/ukloni?student={{s.brojIndeksa}}">Ukloni</a>
